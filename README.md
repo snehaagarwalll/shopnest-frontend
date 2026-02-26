@@ -1,45 +1,56 @@
-# ShopNest - Identity Frontend
+# ShopNest – Order Frontend Module
 
-This branch contains the authentication module for ShopNest Central Frontend.
+This branch implements the Order Frontend module for ShopNest, built on top of the Identity module.
 
-## 🚀 Features Included
+---
 
-- User Registration
-- User Login
-- JWT Authentication
-- Protected Routes
-- Authentication Context (React Context API)
-- Axios API Integration with Identity Service
-- Tailwind CSS UI
+## 🚀 Features
 
-## 🏗 Tech Stack
+- Create Order functionality
+- View My Orders page
+- Secure API calls using JWT authentication
+- Axios integration with Order Service (Port 8081)
+- Automatic Bearer token attachment via interceptor
 
-- React (Vite)
-- Tailwind CSS
-- Axios
-- React Router
-- Context API
+---
 
-## 📂 Folder Structure (Identity Only)
+## 📂 Relevant Files
+
 src/
-├── api/
-│ └── authApi.js
-├── components/
-│ ├── Navbar.jsx
-│ └── ProtectedRoute.jsx
-├── context/
-│ └── AuthContext.jsx
-├── pages/
-│ ├── Login.jsx
-│ └── Register.jsx
-├── App.jsx
-└── main.jsx
+ ├── api/
+ │   └── orderApi.js
+ ├── pages/
+ │   ├── CreateOrder.jsx
+ │   └── Orders.jsx
+ 
 
-## 🔐 Authentication Flow
+---
 
-1. User registers or logs in.
-2. JWT token is received from backend.
-3. Token is stored in localStorage.
-4. Protected routes verify authentication.
-5. Axios attaches token to secured API requests.
+## 🔐 Authentication Dependency
 
+This module depends on the Identity Frontend module:
+- JWT token is stored in localStorage
+- Axios interceptor attaches Authorization header
+- Protected routes ensure authenticated access
+
+---
+
+## 🔄 Order API Integration
+
+Base URL:
+http://localhost:8081/api
+
+Endpoints Used:
+- POST /orders → Create Order
+- GET /orders/my → Fetch logged-in user orders
+
+---
+
+## 🧠 Flow
+
+1. User logs in (Identity module).
+2. JWT token stored in localStorage.
+3. Order requests automatically include Bearer token.
+4. Backend validates token and returns user-specific data.
+
+---
