@@ -1,56 +1,103 @@
-# ShopNest – Order Frontend Module
+# ShopNest Central Frontend
 
-This branch implements the Order Frontend module for ShopNest, built on top of the Identity module.
+This repository contains the frontend modules for ShopNest.
 
 ---
 
-## 🚀 Features
+
+## 🧩 Modules Implemented
+
+
+### 🔐 Identity Module
+
+Handles authentication and authorization.
+
+Features:
+
+- User Registration
+
+- User Login
+
+- JWT-based authentication
+
+- Token storage in localStorage
+
+- Protected routes
+
+- Axios interceptor for Bearer token attachment
+
+
+Relevant Files:
+
+- src/api/authApi.js
+
+- src/context/AuthContext.jsx
+
+- src/pages/Login.jsx
+
+- src/pages/Register.jsx
+
+- src/components/ProtectedRoute.jsx
+
+---
+
+
+### 📦 Order Module
+
+Handles order creation and retrieval.
+
+Features:
 
 - Create Order functionality
+
 - View My Orders page
-- Secure API calls using JWT authentication
+
 - Axios integration with Order Service (Port 8081)
-- Automatic Bearer token attachment via interceptor
+
+- Secure API calls using JWT authentication
+
+
+Relevant Files:
+
+- src/api/orderApi.js
+
+- src/pages/CreateOrder.jsx
+
+- src/pages/Orders.jsx
+
+- src/pages/Home.jsx
 
 ---
 
-## 📂 Relevant Files
 
-src/
- ├── api/
- │   └── orderApi.js
- ├── pages/
- │   ├── CreateOrder.jsx
- │   └── Orders.jsx
- 
+## 🔄 Application Flow
 
----
+1. User logs in via Identity module.
 
-## 🔐 Authentication Dependency
+2. JWT token is stored in localStorage.
 
-This module depends on the Identity Frontend module:
-- JWT token is stored in localStorage
-- Axios interceptor attaches Authorization header
-- Protected routes ensure authenticated access
-
----
-
-## 🔄 Order API Integration
-
-Base URL:
-http://localhost:8081/api
-
-Endpoints Used:
-- POST /orders → Create Order
-- GET /orders/my → Fetch logged-in user orders
-
----
-
-## 🧠 Flow
-
-1. User logs in (Identity module).
-2. JWT token stored in localStorage.
 3. Order requests automatically include Bearer token.
+
 4. Backend validates token and returns user-specific data.
 
 ---
+
+
+## 🚀 Tech Stack
+
+- React (Vite)
+
+- Axios
+
+- Tailwind CSS
+
+- JWT Authentication
+
+---
+
+
+## 📌 Backend Services
+
+- Identity Service → Port 8080
+
+- Order Service → Port 8081
