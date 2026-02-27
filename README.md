@@ -1,45 +1,103 @@
-# ShopNest - Identity Frontend
+# ShopNest Central Frontend
 
-This branch contains the authentication module for ShopNest Central Frontend.
+This repository contains the frontend modules for ShopNest.
 
-## 🚀 Features Included
+---
+
+
+## 🧩 Modules Implemented
+
+
+### 🔐 Identity Module
+
+Handles authentication and authorization.
+
+Features:
 
 - User Registration
-- User Login
-- JWT Authentication
-- Protected Routes
-- Authentication Context (React Context API)
-- Axios API Integration with Identity Service
-- Tailwind CSS UI
 
-## 🏗 Tech Stack
+- User Login
+
+- JWT-based authentication
+
+- Token storage in localStorage
+
+- Protected routes
+
+- Axios interceptor for Bearer token attachment
+
+
+Relevant Files:
+
+- src/api/authApi.js
+
+- src/context/AuthContext.jsx
+
+- src/pages/Login.jsx
+
+- src/pages/Register.jsx
+
+- src/components/ProtectedRoute.jsx
+
+---
+
+
+### 📦 Order Module
+
+Handles order creation and retrieval.
+
+Features:
+
+- Create Order functionality
+
+- View My Orders page
+
+- Axios integration with Order Service (Port 8081)
+
+- Secure API calls using JWT authentication
+
+
+Relevant Files:
+
+- src/api/orderApi.js
+
+- src/pages/CreateOrder.jsx
+
+- src/pages/Orders.jsx
+
+- src/pages/Home.jsx
+
+---
+
+
+## 🔄 Application Flow
+
+1. User logs in via Identity module.
+
+2. JWT token is stored in localStorage.
+
+3. Order requests automatically include Bearer token.
+
+4. Backend validates token and returns user-specific data.
+
+---
+
+
+## 🚀 Tech Stack
 
 - React (Vite)
-- Tailwind CSS
+
 - Axios
-- React Router
-- Context API
 
-## 📂 Folder Structure (Identity Only)
-src/
-├── api/
-│ └── authApi.js
-├── components/
-│ ├── Navbar.jsx
-│ └── ProtectedRoute.jsx
-├── context/
-│ └── AuthContext.jsx
-├── pages/
-│ ├── Login.jsx
-│ └── Register.jsx
-├── App.jsx
-└── main.jsx
+- Tailwind CSS
 
-## 🔐 Authentication Flow
+- JWT Authentication
 
-1. User registers or logs in.
-2. JWT token is received from backend.
-3. Token is stored in localStorage.
-4. Protected routes verify authentication.
-5. Axios attaches token to secured API requests.
+---
 
+
+## 📌 Backend Services
+
+- Identity Service → Port 8080
+
+- Order Service → Port 8081
