@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   getMyOrders,
   cancelOrder,
   updateOrderStatus,
 } from "../api/orderApi";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
+  const { role } = useContext(AuthContext);
 
   const fetchOrders = async () => {
     try {
@@ -39,7 +41,7 @@ export default function Orders() {
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-10">
       <div className="w-full max-w-6xl bg-white shadow-2xl rounded-lg flex overflow-hidden">
-        
+
         <div className="w-2/3 p-10">
           <h1 className="text-2xl font-semibold mb-6">
             My Orders
@@ -79,6 +81,7 @@ export default function Orders() {
                 </div>
 
                 <div className="space-x-3">
+
                   <button
                     onClick={() => handleCancel(order.id)}
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
@@ -86,12 +89,14 @@ export default function Orders() {
                     Cancel
                   </button>
 
-                  <button
-                    onClick={() => handleStatusUpdate(order.id)}
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-md transition"
-                  >
-                    Mark Shipped
-                  </button>
+                  {(role === "SELLER" || role === "ADMIN") && (
+                    <button
+                      onClick={() => handleStatusUpdate(order.id)}
+                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-md transition"
+                    >
+                      Mark Shipped
+                    </button>
+                  )}
                 </div>
               </div>
             ))

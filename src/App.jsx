@@ -10,7 +10,6 @@ import { AuthProvider } from "./context/AuthContext";
 function AppRoutes() {
   const location = useLocation();
 
-  // Hide navbar on login & register
   const hideNavbar =
     location.pathname === "/login" ||
     location.pathname === "/register";
@@ -20,24 +19,31 @@ function AppRoutes() {
       {!hideNavbar && <Navbar />}
 
       <Routes>
+
+        {/* HOME - ONLY CUSTOMER & SELLER */}
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["CUSTOMER", "SELLER"]}>
               <Home />
             </ProtectedRoute>
           }
         />
+
+        {/* ORDERS - ALL ROLES */}
         <Route
           path="/orders"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["CUSTOMER", "SELLER", "ADMIN"]}>
               <Orders />
             </ProtectedRoute>
           }
         />
+
+        {/* PUBLIC ROUTES */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
       </Routes>
     </>
   );
