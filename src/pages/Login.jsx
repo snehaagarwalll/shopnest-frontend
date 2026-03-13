@@ -2,10 +2,12 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { login as loginApi } from "../api/authApi";
 import { AuthContext } from "../context/AuthContext";
+import RoleToggle from "../components/RoleToggle";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("CUSTOMER");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
@@ -16,10 +18,16 @@ export default function Login() {
       const response = await loginApi({ email, password });
 
       const token = response.data.data.token;
+      const backendRole = response.data.data.role;
 
-      if (token) {
-        login(token);
-        navigate("/");
+      if (token && backendRole) {
+        login(token, backendRole);
+
+        if (backendRole === "ADMIN") {
+          navigate("/orders");
+        } else {
+          navigate("/");
+        }
       } else {
         alert("Login failed");
       }
@@ -30,7 +38,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
-      
+
       <div className="hidden md:flex w-1/2 bg-gradient-to-b from-indigo-700 to-indigo-900 text-white flex-col justify-center items-center px-10">
         <h1 className="text-5xl font-bold mb-6">Welcome Back</h1>
         <p className="text-lg text-center max-w-md">
@@ -41,6 +49,13 @@ export default function Login() {
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-100">
         <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
           <h2 className="text-3xl font-bold text-center mb-6">Log In</h2>
+
+          <div className="mb-6">
+            <RoleToggle
+              selectedRole={role}
+              setSelectedRole={setRole}
+            />
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -69,7 +84,7 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="text-sm text-center mt-4">
+          <p className="text-sm text-center mt-6">
             Don’t have an account?{" "}
             <span
               className="text-indigo-600 cursor-pointer hover:underline"
@@ -78,9 +93,9 @@ export default function Login() {
               Register
             </span>
           </p>
+
         </div>
       </div>
-
     </div>
   );
 }

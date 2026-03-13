@@ -1,25 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../api/authApi";
+import RoleToggle from "../components/RoleToggle";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("CUSTOMER");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register({ 
-        name: name, 
-        email: email, 
-        password: password, 
-        role: "USER"
+      await register({
+        name,
+        email,
+        password,
+        role,
       });
       navigate("/login");
     } catch (err) {
-      console.error(err.response?.data);
       alert("Registration failed");
     }
   };
@@ -37,6 +38,13 @@ export default function Register() {
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-100">
         <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
           <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
+
+          <div className="mb-6">
+            <RoleToggle
+              selectedRole={role}
+              setSelectedRole={setRole}
+            />
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
